@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title> Metrica Andina </title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="main" role="main">
+ <div id="content" class="container">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">        
+      <a class="navbar-brand" href="../public">Metrica Andina</a>
+    </div>
+
+  </nav>
+
+  <h3>List of employees</h3>
+  <legend></legend>
+
+  <div class="form-group">
+    <form method="GET">
+     <label class="col-md-1 control-label">Search</label>
+     <div class="col-md-6">
+      <input type="text" class="form-control" name="correo" placeholder="Ingrese Correo">
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-primary"> Buscar</button>
+    </div>
+  </form>
+</div>
+<br><br><br>
+<div class="form-group">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Position</th>
+        <th>Salary</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($empleado as $datos): ?>
+        <tr>
+          <td><?php echo $datos['name']; ?></td>
+          <td><?php echo $datos['email']; ?></td>
+          <td><?php echo $datos['position']; ?></td>
+          <td><?php echo $datos['salary']; ?></td>
+          <td>
+            <button data-toggle="modal" data-target="#id_<?php echo $datos['id'];?>" class="btn btn-info">Detail</button>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+
+<?php foreach ($empleado as $datos):?>
+<div class="modal fade" id="id_<?php echo $datos['id'];?>">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><strong> ID EMPLEADO:</strong> <?php echo $datos['id'];?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <fieldset>
+          <div class="form-group">
+           <div class="row">
+            <div class="col-md-6">
+             <label class="col-md-3 control-label"><strong>Name</strong></label>
+             <span class="col-md-9 control-label"><?php echo $datos['name']; ?></span>
+           </div>
+           <div class="col-md-6">
+             <label class="col-md-3 control-label"><strong>Email</strong> </label>
+             <span class="col-md-8 control-label"><?php echo $datos['email']; ?></span>
+           </div>
+         </div>
+
+         <div class="row">
+          <div class="col-md-6">
+           <label class="col-md-3 control-label"><strong>Phone</strong></label>
+           <span class="col-md-9 control-label"><?php echo $datos['phone']; ?></span>
+         </div>
+          
+       </div>
+
+       <div class="row">
+      <div class="col-md-12">
+      <label class="col-md-3 control-label"><strong>address</strong></label>
+           <span class="col-md-9 control-label"><?php echo $datos['address']; ?></span>
+     </div>
+   </div>
+
+       <div class="row">
+        <div class="col-md-6">
+         <label class="col-md-3 control-label"><strong>position</strong></label>
+         <span class="col-md-9 control-label"><?php echo $datos['position']; ?></span>
+       </div>
+       <div class="col-md-6">
+       <label class="col-md-2 control-label"><strong>salary</strong></label>
+       <span class="col-md-10 control-label"><?php echo $datos['salary']; ?></span>
+     </div>
+     </div>
+
+    
+
+   <div class="row">
+    <div class="col-md-12">
+     <label class="col-md-2 control-label"><strong>skills</strong></label>
+     <span class="col-md-10 control-label">
+      <?php foreach($datos['skills'] as $skill):?>
+        <?php echo $skill['skill'].','; ?>
+      <?php  endforeach;?>
+    </span>
+  </div>
+</div>
+
+</div>
+</fieldset>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>
+</div>
+</div>
+</div>
+<?php endforeach; ?>
+</body>
+</html>
