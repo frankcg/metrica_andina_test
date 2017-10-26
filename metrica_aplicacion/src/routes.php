@@ -34,8 +34,9 @@ $app->get('/employee', function (Request $request, Response $response, array $ar
 
 $app->get('/salary', function ($request, $response, $args) {
 
-	$json = file_get_contents(__DIR__ . '/../bd/employees.json');
+	$json = file_get_contents(__DIR__ . '/../bd/employees.json');	
     $data = json_decode($json, true);
+
     $minimo = $request->getQueryParam('minimo');
     $maximo = $request->getQueryParam('maximo');
 
@@ -48,36 +49,37 @@ $app->get('/salary', function ($request, $response, $args) {
 	    	$sueldo = floatval($sueldo);
 	    	//echo $sueldo; exit();
 	    	if ($sueldo >= $minimo && $sueldo <= $maximo ) {
-	    		$valor[] = $contenido;
+	    		$array_valor[] = $contenido;
 	    	}
 	    }
     }
 
+    // ARMANDO EL XML
 	$doc = new DomDocument('1.0');
-	$root = $doc->createElement('root');
-	$root = $doc->appendChild($root);
+	$element = $doc->createElement('element');
+	$element = $doc->appendChild($element);
 
-	foreach ($valor as $elemento=>$data):
+	foreach ($array_valor as $elemento=>$data):
 
 	    $occ = $doc->createElement('employee');
-	    $occ = $root->appendChild($occ);
+	    $occ = $element->appendChild($occ);
 
-	    foreach ($data as $key=>$informacion):
+	    foreach ($data as $key=>$dato):
 
 	        $child = $doc->createElement($key);
 	        $child = $occ->appendChild($child);
 
-			if (is_array($informacion) || is_object($informacion)){
+			if (is_array($dato) || is_object($dato)){
 
-				foreach($informacion as $valor):
+				foreach($dato as $val):
 					$value = $doc->createElement('skill');
 					$value = $child->appendChild($value);
-					$values = $doc->createTextNode($valor['skill']);
+					$values = $doc->createTextNode($val['skill']);
 			        $values = $value->appendChild($values);
 				endforeach;
 
 			}else{
-				$value = $doc->createTextNode($informacion);
+				$value = $doc->createTextNode($dato);
 		        $value = $child->appendChild($value);
 			}
 
@@ -86,5 +88,5 @@ $app->get('/salary', function ($request, $response, $args) {
 	endforeach;
 
 	$xml = $doc->saveXML() ;
-	echo $xml;
+	echo $xml; // IMPRIMIR XML
 });
