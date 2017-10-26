@@ -4,6 +4,7 @@ class ChangeString{
     public function build($cadena) {
 
       $l=1;
+      $salida='';
       $array = array();
       $len = mb_strlen($cadena, "UTF-8");
 
